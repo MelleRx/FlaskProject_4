@@ -1,6 +1,7 @@
 from init import db
 
 from sqlalchemy.dialects.postgresql import JSON
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
@@ -10,6 +11,17 @@ class User(db.Model):
     mail = db.Column(db.String, nullable=False)
     password = db.Column(db.String, nullable=False)
     orders = db.relationship("Order")
+
+    @property
+    def password_(self):
+        raise AttributeError("Вам не нужно знать пароль!")
+
+    @password_.setter
+    def password_(self, password_):
+        self.password_ = generate_password_hash(password_)
+
+    def password_valid(self, password_):
+        return check_password_hash(self.password_hash, password_)
 
 
 class Dish(db.Model):

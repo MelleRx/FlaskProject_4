@@ -1,18 +1,10 @@
-from flask import Flask, render_template, session, redirect, request
+from flask import render_template, session, redirect, request
 from datetime import datetime
 
-from init import db, migrate
+from init import db, app
 from forms import LoginForm, RegistrationForm, OrderForm
 from tables import User, Dish, Category, Order
 from words import correct_word
-
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:21Dima2001@127.0.0.1:5432/Kukulidi_Delivery"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
-app.secret_key = "kukulidi"
-
-db.init_app(app)
-migrate.init_app(app, db)
 
 
 @app.route("/")
@@ -133,7 +125,7 @@ def render_login():
         if not form.validate_on_submit():
             return render_template("login.html", form=form)
         user = User.query.filter(User.mail == form.mail.data).first()
-        if not user or user.password != form.password.data:
+        if not user or user.password_valid(form.password.data) != form.password.data:
             form.mail.errors.append("Неверно указана почта или пароль")
         else:
             session["user_id"] = user.id
@@ -158,7 +150,7 @@ def registration():
     if request.method == "POST":
         user = User()
         user.mail = form.mail.data
-        user.password = form.password.data
+        user.password_hash = form.password.data
         user_ = User.query.filter_by(mail=user.mail).first()
         if user_:
             form.mail.errors.append("Пользователь под такой почтой уже зарегистрирован")
@@ -178,5 +170,4 @@ def render_server_error(error):
     return render_template("error.html", error=error), 500
 
 
-if __name__ == "__main__":
-    app.run()
+

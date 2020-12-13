@@ -1,11 +1,16 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Length, EqualTo
 
 
 class LoginForm(FlaskForm):
     mail = StringField("Электронная почта:", validators=[DataRequired()])
-    password = PasswordField("Пароль:", validators=[DataRequired()])
+
+    password = PasswordField("Пароль:", validators=[
+        DataRequired(),
+        Length(min=8, message="Пароль должен быть не менее 8 символов"),
+        EqualTo('confirm_password', message="Пароли не одинаковые")
+    ])
 
 
 class RegistrationForm(FlaskForm):
