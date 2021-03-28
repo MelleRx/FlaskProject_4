@@ -6,9 +6,9 @@
 
 Этот сайт является готовым прототипом сайта для сервиса доставки готовой еды.
 
-Sample usage:
+Скриншот главной страницы:
 
-![Image alt](https://github.com/MelleRx/FlaskProject_4/raw/master/static/images/page.png)
+![Image alt](https://github.com/MelleRx/FlaskProject_4/raw/master/static/images/page_1.png)
 
 
 ## Фукнкциональные возможности
