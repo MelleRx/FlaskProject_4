@@ -8,7 +8,7 @@
 
 Sample usage:
 
-<a <img src="FlaskProject_4/static/images/page.png" alt="demonstration" border="0" /></a>
+![Image alt](https://github.com/MelleRx/FlaskProject_4/raw/master/static/images/page.png)
 
 
 ## Фукнкциональные возможности
