@@ -6,3 +6,5 @@ def correct_word(counter):
         return " блюда"
     else:
         return " блюд"
+
+
