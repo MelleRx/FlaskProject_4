@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo
 
 
@@ -24,3 +24,4 @@ class OrderForm(FlaskForm):
     name = StringField("Имя")
     phone = StringField("Телефон")
     address = StringField("Адрес")
+    submit = SubmitField("Оформить заказ")

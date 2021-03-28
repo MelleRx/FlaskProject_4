@@ -44,7 +44,6 @@ def add_to_cart(item):
     cart = session.get("cart", [])
     cart.append(item)
     session["cart"] = cart
-    print(session.get("cart", []))
     for i in items:
         if i.title == item:
             if not session.get("price"):
@@ -93,7 +92,7 @@ def pop_from_cart(item):
 def render_order():
     form = OrderForm()
     if request.method == "POST":
-        id_o = User.orders.query.all() + 1
+        id_o = len(db.session.query(User).get(session["user_id"])) + 1
         date = datetime.now().date()
         mail = form.mail.data
         name = form.name.data
@@ -108,7 +107,7 @@ def render_order():
         return render_template("ordered.html")
     else:
         orders = db.session.query(Order)
-        return render_template("account.html", orders=orders)
+        return render_template("cart.html", orders=orders)
 
 
 @app.route("/account/", methods=["GET", "POST"])
@@ -168,6 +167,3 @@ def render_not_found(error):
 @app.errorhandler(500)
 def render_server_error(error):
     return render_template("error.html", error=error), 500
-
-
-
